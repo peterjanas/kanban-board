@@ -1,37 +1,37 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
-import TaskCard from './TaskCard.vue'
-import type { Task } from '../types/Task'
-import { ref, watch } from 'vue'
+import TaskCard from "./TaskCard.vue";
+import type { Task } from "../types/Task";
+import { ref, watch } from "vue";
 
 const props = defineProps<{
-  title: string
-  tasks: Task[]
-  status: Task['status']
-}>()
+  title: string;
+  tasks: Task[];
+  status: Task["status"];
+}>();
 
 const emit = defineEmits<{
-  (e: 'delete-task', id: number): void
-}>()
+  (e: "delete-task", id: number): void;
+}>();
 
-const internalTasks = ref([...props.tasks])
+const internalTasks = ref([...props.tasks]);
 
-watch(() => props.tasks, (newTasks) => {
-  internalTasks.value = [...newTasks]
-})
+watch(
+  () => props.tasks,
+  (newTasks) => {
+    internalTasks.value = [...newTasks];
+  }
+);
 
 function handleDrop(evt: any) {
-  // When items are reordered or moved between columns
   for (const task of internalTasks.value) {
-    task.status = props.status
+    task.status = props.status;
   }
 }
-
-
 </script>
 
 <template>
-  <v-card class="pa-2" elevation="4">
+  <v-card class="pa-2 d-flex flex-column flex-grow-1" elevation="4">
     <v-card-title>{{ title }}</v-card-title>
 
     <draggable
@@ -40,13 +40,25 @@ function handleDrop(evt: any) {
       item-key="id"
       ghost-class="drag-ghost"
       @change="handleDrop"
+      class="draggable-column"
     >
-    <template #item="{ element }">
-      <TaskCard
-        :task="element"
-        @delete-task="$emit('delete-task', element.id)"
-    />
-  </template>
+      <template #item="{ element }">
+        <TaskCard
+          :task="element"
+          @delete-task="$emit('delete-task', element.id)"
+        />
+      </template>
     </draggable>
+
+    <v-card-subtitle
+      v-if="internalTasks.length === 0"
+      class="text-grey text-center"
+    >
+      No tasks
+    </v-card-subtitle>
   </v-card>
 </template>
+
+<styled>
+  
+</styled>

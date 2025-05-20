@@ -1,49 +1,49 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import type { Task } from '../types/Task'
+import { ref, watch } from "vue";
+import type { Task } from "../types/Task";
 
 const emit = defineEmits<{
-  (e: 'add-task', task: Task): void
-}>()
+  (e: "add-task", task: Task): void;
+}>();
 
-const dialog = ref(false)
-const newTaskTitle = ref('')
-const newTaskDescription = ref('')
-const selectedStatus = ref<'todo' | 'inProgress' | 'done'>('todo')
-const warning = ref('')
+const dialog = ref(false);
+const newTaskTitle = ref("");
+const newTaskDescription = ref("");
+const selectedStatus = ref<"todo" | "inProgress" | "done">("todo");
+const warning = ref("");
 
 const statusOptions = [
-  { title: 'To Do', value: 'todo' },
-  { title: 'In Progress', value: 'inProgress' },
-  { title: 'Done', value: 'done' }
-]
+  { title: "To Do", value: "todo" },
+  { title: "In Progress", value: "inProgress" },
+  { title: "Done", value: "done" },
+];
 
 function submitTask() {
-  const trimmed = newTaskTitle.value.trim()
+  const trimmed = newTaskTitle.value.trim();
   if (!trimmed) {
-    warning.value = 'Title is required'
-    return
+    warning.value = "Title is required";
+    return;
   }
 
-  emit('add-task', {
+  emit("add-task", {
     id: Date.now(),
     title: trimmed,
     description: newTaskDescription.value.trim(),
-    status: selectedStatus.value
-  })
+    status: selectedStatus.value,
+  });
 
-  dialog.value = false
-  newTaskTitle.value = ''
-  newTaskDescription.value = ''
-  selectedStatus.value = 'todo'
-  warning.value = ''
+  dialog.value = false;
+  newTaskTitle.value = "";
+  newTaskDescription.value = "";
+  selectedStatus.value = "todo";
+  warning.value = "";
 }
 
 watch(newTaskTitle, (val) => {
   if (val.trim()) {
-    warning.value = ''
+    warning.value = "";
   }
-})
+});
 </script>
 
 <template>

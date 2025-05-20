@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { Task } from '../types/Task'
+import type { Task } from "../types/Task";
 
-const props = defineProps<{task: Task }>()
+const props = defineProps<{ task: Task }>();
 
 const emit = defineEmits<{
-  (e: 'delete-task', id: number): void
-}>()
+  (e: "delete-task", id: number): void;
+}>();
 
 function handleDelete() {
-  emit('delete-task', props.task.id)
+  emit("delete-task", props.task.id);
 }
 </script>
 
