@@ -2,6 +2,7 @@
 import draggable from "vuedraggable";
 import TaskCard from './TaskCard.vue'
 import type { Task } from '../types/Task'
+import { ref, watch } from 'vue'
 
 const props = defineProps<{
   title: string
@@ -13,19 +14,39 @@ const emit = defineEmits<{
   (e: 'delete-task', id: number): void
 }>()
 
+const internalTasks = ref([...props.tasks])
+
+watch(() => props.tasks, (newTasks) => {
+  internalTasks.value = [...newTasks]
+})
+
+function handleDrop(evt: any) {
+  // When items are reordered or moved between columns
+  for (const task of internalTasks.value) {
+    task.status = props.status
+  }
+}
+
+
 </script>
 
 <template>
   <v-card class="pa-2" elevation="4">
     <v-card-title>{{ title }}</v-card-title>
 
-    <div v-for="task in tasks" :key="task.id">
+    <draggable
+      v-model="internalTasks"
+      group="tasks"
+      item-key="id"
+      ghost-class="drag-ghost"
+      @change="handleDrop"
+    >
+    <template #item="{ element }">
       <TaskCard
-        v-for="task in tasks"
-        :key="task.id"
-        :task="task"
-        @delete-task="$emit('delete-task', $event)"
-      />
-    </div>
+        :task="element"
+        @delete-task="$emit('delete-task', element.id)"
+    />
+  </template>
+    </draggable>
   </v-card>
 </template>
