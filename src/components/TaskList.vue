@@ -12,7 +12,8 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "delete-task", id: number): void;
-}>();
+  (e: "edit-task", task: Task): void;
+}>()
 
 const internalTasks = ref([...props.tasks]);
 
@@ -46,6 +47,7 @@ function handleDrop(evt: any) {
         <TaskCard
           :task="element"
           @delete-task="$emit('delete-task', element.id)"
+          @edit-task="$emit('edit-task', element)"
         />
       </template>
     </draggable>

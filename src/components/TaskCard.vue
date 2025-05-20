@@ -5,7 +5,8 @@ const props = defineProps<{ task: Task }>();
 
 const emit = defineEmits<{
   (e: "delete-task", id: number): void;
-}>();
+  (e: "edit-task", task: Task): void;
+}>()
 
 function handleDelete() {
   emit("delete-task", props.task.id);
@@ -19,15 +20,14 @@ function handleDelete() {
       style="white-space: normal; word-break: break-word;"
     >
       {{ task.title }}
-      <v-btn
-        icon
-        size="small"
-        variant="text"
-        @click="handleDelete"
-        class="ma-0 pa-0"
-      >
-        <v-icon size="30" color="red">mdi-delete</v-icon>
-      </v-btn>
+      <div class="d-flex gap-1">
+    <v-btn icon size="small" variant="text" @click="$emit('edit-task', task)">
+      <v-icon size="22">mdi-pencil</v-icon>
+    </v-btn>
+    <v-btn icon size="small" variant="text" @click="handleDelete">
+      <v-icon size="22" color="red">mdi-delete</v-icon>
+    </v-btn>
+  </div>
     </v-card-title>
 
     <v-card-text
