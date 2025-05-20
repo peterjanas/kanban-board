@@ -1,27 +1,25 @@
-import { ref } from 'vue'
-import type { Task, ColumnType } from '../types/Task'
+import { ref, computed } from "vue";
+import type { Task } from "../types/Task";
 
-const nextId = ref(1)
-
-const columns = ref<Record<ColumnType, Task[]>>({
-  todo: [],
-  inProgress: [],
-  done: [],
-})
+const tasks = ref<Task[]>([]);
 
 export function useKanban() {
-  const addTask = (column: ColumnType, title: string, description: string) => {
-    columns.value[column].push({
-      id: nextId.value++,
-      title,
-      description,
-    })
+  const todo = computed(() => tasks.value.filter((t) => t.status === "todo"));
+  const inProgress = computed(() => tasks.value.filter((t) => t.status === "inProgress"));
+  const done = computed(() => tasks.value.filter((t) => t.status === "done"));
+
+  function addTask(task: Task) {
+    tasks.value.push(task);
   }
 
-  const deleteTask = (column: ColumnType, id: number) => {
-    columns.value[column] = columns.value[column].filter(t => t.id !== id)
+  function updateTaskStatus(taskId: number, newStatus: Task["status"]) {
+    const task = tasks.value.find((t) => t.id === taskId);
+    if (task) task.status = newStatus;
   }
 
-  return { columns, addTask, deleteTask }
+  function deleteTask(taskId: number) {
+    tasks.value = tasks.value.filter(t => t.id !== taskId)
 }
 
+  return { tasks, todo, inProgress, done, addTask, updateTaskStatus, deleteTask };
+}

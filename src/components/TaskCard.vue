@@ -1,10 +1,13 @@
 <script setup lang="ts">
-defineProps<{ title: string; description: string }>()
+import type { Task } from '../types/Task'
+
+const props = defineProps<{task: Task }>()
 </script>
+
 
 <template>
   <v-card class="mb-2 pa-2" elevation="2">
-    <div class="font-weight-bold">{{ title }}</div>
-    <div class="text-subtitle-2">{{ description }}</div>
+    <v-card-title>{{ task.title }}</v-card-title>
+    <v-card-text>{{ task.description }}</v-card-text>
   </v-card>
 </template>

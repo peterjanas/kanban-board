@@ -2,6 +2,5 @@ export interface Task {
   id: number
   title: string
   description: string
+  status: 'todo' | 'inProgress' | 'done'
 }
-
-export type ColumnType = 'todo' | 'inProgress' | 'done'
