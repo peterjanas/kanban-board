@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import draggable from 'vuedraggable'
+import TaskList from './views/KanbanBoard.vue'
 </script>
 
-<template>
-  <div>
-<h1>hello</h1>
-  </div>
 
+
+<template>
+  <v-app>
+    <TaskList />
+  </v-app>
 </template>
 
-<style scoped>
-
-
-</style>
