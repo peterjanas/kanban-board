@@ -14,12 +14,27 @@ function handleDelete() {
 
 <template>
   <v-card class="ma-2 pa-2" elevation="2">
-    <v-card-title class="d-flex justify-space-between">
-      <span>{{ task.title }}</span>
-      <v-btn icon @click="handleDelete" color="red">
-        <v-icon>mdi-delete</v-icon>
+    <v-card-title
+      class="d-flex justify-space-between"
+      style="white-space: normal; word-break: break-word;"
+    >
+      {{ task.title }}
+      <v-btn
+        icon
+        size="small"
+        variant="text"
+        @click="handleDelete"
+        class="ma-0 pa-0"
+      >
+        <v-icon size="30" color="red">mdi-delete</v-icon>
       </v-btn>
     </v-card-title>
-    <v-card-text>{{ task.description }}</v-card-text>
+
+    <v-card-text
+      class="text-wrap"
+      style="white-space: normal; word-break: break-word;"
+    >
+      {{ task.description }}
+    </v-card-text>
   </v-card>
 </template>
