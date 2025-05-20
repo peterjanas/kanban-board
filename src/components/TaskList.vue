@@ -9,6 +9,10 @@ const props = defineProps<{
   status: Task['status']
 }>()
 
+const emit = defineEmits<{
+  (e: 'delete-task', id: number): void
+}>()
+
 </script>
 
 <template>
@@ -16,7 +20,12 @@ const props = defineProps<{
     <v-card-title>{{ title }}</v-card-title>
 
     <div v-for="task in tasks" :key="task.id">
-      <TaskCard :task="task" />
+      <TaskCard
+        v-for="task in tasks"
+        :key="task.id"
+        :task="task"
+        @delete-task="$emit('delete-task', $event)"
+      />
     </div>
   </v-card>
 </template>

@@ -13,12 +13,12 @@ export function useKanban() {
   }
 
   function updateTaskStatus(taskId: number, newStatus: Task["status"]) {
-    const task = tasks.value.find((t) => t.id === taskId);
+    const task = tasks.value.find((task) => task.id === taskId);
     if (task) task.status = newStatus;
   }
 
   function deleteTask(taskId: number) {
-    tasks.value = tasks.value.filter(t => t.id !== taskId)
+    tasks.value = tasks.value.filter(task => task.id !== taskId)
 }
 
   return { tasks, todo, inProgress, done, addTask, updateTaskStatus, deleteTask };
