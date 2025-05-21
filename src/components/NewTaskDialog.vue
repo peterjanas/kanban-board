@@ -48,11 +48,7 @@ watch(newTaskTitle, (val) => {
 
 <template>
   <div>
-    <v-btn
-      color="primary"
-      prepend-icon="mdi-plus"
-      @click="dialog = true"
-    >
+    <v-btn color="primary" prepend-icon="mdi-plus" @click="dialog = true">
       Add Task
     </v-btn>
 

@@ -1,14 +1,13 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { useKanban } from "../src/composables/useKanban";
 
-import { tasks as allTasks } from "../src/composables/useKanban";
 
 describe("useKanban", () => {
   let kanban: ReturnType<typeof useKanban>;
 
   beforeEach(() => {
-    allTasks.value = []; // Reset all tasks
     kanban = useKanban();
+    kanban.reset();
   });
 
   it("starts with an empty task list", () => {
@@ -41,6 +40,28 @@ describe("useKanban", () => {
     expect(kanban.todo.value).toHaveLength(0);
     expect(kanban.done.value[0].title).toBe("Move me");
   });
+
+  it("updates a task's title and description", () => {
+    kanban.addTask({
+      id: 2,
+      title: "Old Title",
+      description: "Old Desc",
+      status: "todo",
+    });
+
+    kanban.updateTask({
+      id: 2,
+      title: "New Title",
+      description: "New Desc",
+      status: "todo",
+    });
+
+    const updated = kanban.tasks.value.find((t) => t.id === 2);
+    expect(updated?.title).toBe("New Title");
+    expect(updated?.description).toBe("New Desc");
+  });
+
+  
 
   it("deletes a task", () => {
     kanban.addTask({

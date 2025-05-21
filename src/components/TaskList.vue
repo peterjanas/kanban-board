@@ -3,6 +3,9 @@ import draggable from "vuedraggable";
 import TaskCard from "./TaskCard.vue";
 import type { Task } from "../types/Task";
 import { ref, watch } from "vue";
+import { useKanban } from "../composables/useKanban";
+
+const { updateTaskStatus } = useKanban();
 
 const props = defineProps<{
   title: string;
@@ -24,9 +27,9 @@ watch(
   }
 );
 
-function handleDrop(evt: any) {
+function handleDrop() {
   for (const task of internalTasks.value) {
-    task.status = props.status;
+    updateTaskStatus(task.id, props.status);
   }
 }
 </script>
@@ -46,8 +49,8 @@ function handleDrop(evt: any) {
       <template #item="{ element }">
         <TaskCard
           :task="element"
-          @delete-task="$emit('delete-task', element.id)"
-          @edit-task="$emit('edit-task', element)"
+          @delete-task="emit('delete-task', element.id)"
+          @edit-task="emit('edit-task', element)"
         />
       </template>
     </draggable>
