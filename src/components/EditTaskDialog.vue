@@ -1,35 +1,40 @@
 <!-- ✅ EditTaskDialog.vue -->
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import type { Task } from '../types/Task'
+import { ref, watch } from "vue";
+import type { Task } from "../types/Task";
 
-const props = defineProps<{ task: Task }>()
+const props = defineProps<{ task: Task }>();
+
 const emit = defineEmits<{
-  (e: 'save-task', task: Task): void
-  (e: 'close'): void
-}>()
+  (e: "save-task", task: Task): void;
+  (e: "close"): void;
+}>();
 
-const title = ref('')
-const description = ref('')
-const dialog = ref(true)
+const dialog = ref(true);
+const title = ref("");
+const description = ref("");
 
 watch(
   () => props.task,
   (task) => {
-    title.value = task.title
-    description.value = task.description
+    title.value = task.title;
+    description.value = task.description;
   },
   { immediate: true }
-)
+);
 
-function save() {
-  emit('save-task', {
+function handleClose() {
+  dialog.value = false;
+  emit("close");
+}
+
+function handleSave() {
+  emit("save-task", {
     ...props.task,
     title: title.value.trim(),
-    description: description.value.trim()
-  })
-  dialog.value = false
-  emit('close')
+    description: description.value.trim(),
+  });
+  handleClose();
 }
 </script>
 
@@ -42,8 +47,8 @@ function save() {
         <v-textarea label="Description" v-model="description" rows="3" />
       </v-card-text>
       <v-card-actions class="justify-end">
-        <v-btn text @click="$emit('close')">Cancel</v-btn>
-        <v-btn color="primary" @click="save">Save</v-btn>
+        <v-btn text @click="handleClose">Cancel</v-btn>
+        <v-btn color="primary" @click="handleSave">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

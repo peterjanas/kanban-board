@@ -4,10 +4,11 @@ import { useKanban } from "../composables/useKanban";
 import NewTaskDialog from "../components/NewTaskDialog.vue";
 import EditTaskDialog from "../components/EditTaskDialog.vue";
 import type { Task } from "../types/Task";
-import { ref } from "vue";
+import { ref} from "vue";
 
 const { todo, inProgress, done, addTask, deleteTask } = useKanban();
 const editingTask = ref<Task | null>(null);
+
 
 function handleAddTask(task: Task) {
   addTask(task);
@@ -18,9 +19,8 @@ function handleEditTask(task: Task) {
 }
 
 function handleSaveTask(updated: Task) {
-  const original = [todo.value, inProgress.value, done.value]
-    .flat()
-    .find((t) => t.id === updated.id);
+  const allTasks = [todo.value, inProgress.value, done.value].flat();
+  const original = allTasks.find((task) => task.id === updated.id);
   if (original) {
     original.title = updated.title;
     original.description = updated.description;
@@ -31,8 +31,6 @@ function handleSaveTask(updated: Task) {
 function handleDeleteTask(taskId: number) {
   deleteTask(taskId);
 }
-
-
 </script>
 
 <template>
@@ -70,10 +68,10 @@ function handleDeleteTask(taskId: number) {
     <NewTaskDialog @add-task="handleAddTask" />
 
     <EditTaskDialog
-      v-if="editingTask"
-      :task="editingTask"
-      @save-task="handleSaveTask"
-      @close="editingTask = null"
-    />
+  v-if="editingTask"
+  :task="editingTask"
+  @save-task="handleSaveTask"
+  @close="editingTask = null"
+/>
   </v-container>
 </template>

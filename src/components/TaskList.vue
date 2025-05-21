@@ -13,7 +13,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "delete-task", id: number): void;
   (e: "edit-task", task: Task): void;
-}>()
+}>();
 
 const internalTasks = ref([...props.tasks]);
 
@@ -41,7 +41,7 @@ function handleDrop(evt: any) {
       item-key="id"
       ghost-class="drag-ghost"
       @change="handleDrop"
-      class="draggable-column"
+      style="min-height: 100px; padding: 4px"
     >
       <template #item="{ element }">
         <TaskCard
@@ -60,7 +60,3 @@ function handleDrop(evt: any) {
     </v-card-subtitle>
   </v-card>
 </template>
-
-<styled>
-  
-</styled>
