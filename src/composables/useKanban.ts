@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import type { Task } from "../types/Task";
 
-const tasks = ref<Task[]>([]);
+export const tasks = ref<Task[]>([])
 
 export function useKanban() {
   const todo = computed(() => tasks.value.filter((t) => t.status === "todo"));

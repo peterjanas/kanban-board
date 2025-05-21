@@ -35,7 +35,6 @@ function handleDeleteTask(taskId: number) {
 
 <template>
   <v-container fluid class="d-flex flex-column">
-    <!-- Main content -->
     <v-row>
       <v-col>
         <TaskList
@@ -66,14 +65,12 @@ function handleDeleteTask(taskId: number) {
       </v-col>
     </v-row>
 
-    <!-- Add task button, flex aligned to bottom-right inside layout -->
     <v-row class="justify-end align-end" style="min-height: 64px;">
       <v-col cols="auto">
         <NewTaskDialog @add-task="handleAddTask" />
       </v-col>
     </v-row>
 
-    <!-- Edit dialog if editing -->
     <EditTaskDialog
       v-if="editingTask"
       :task="editingTask"
