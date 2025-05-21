@@ -12,4 +12,3 @@ The project is deployed on **Vercel**.
 ## 🔗 link
 
 [https://kanban-board-aupp.vercel.app](https://kanban-board-aupp.vercel.app)
-
