@@ -50,12 +50,10 @@ watch(newTaskTitle, (val) => {
   <div>
     <v-btn
       color="primary"
-      icon
-      size="large"
-      style="position: fixed; bottom: 24px; right: 24px; z-index: 999"
+      prepend-icon="mdi-plus"
       @click="dialog = true"
     >
-      <v-icon>mdi-plus</v-icon>
+      Add Task
     </v-btn>
 
     <v-dialog v-model="dialog" max-width="500">
